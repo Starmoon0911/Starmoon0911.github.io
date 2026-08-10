@@ -28,11 +28,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        
-      <Background />
-      <Header />
+
+        <Background />
+        <div className="h-48">
+          <div id="header-sentinel" className="h-px" />
+        </div>
+        <Header />
         {children}
-        </body>
+      </body>
     </html>
   );
 }
