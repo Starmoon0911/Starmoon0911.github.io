@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@arayui/rainy-day": "git+https://github.com/Starmoon0911/AnyRainyDay.git#fix/video-background",
     "next": "16.3.0",
     "react": "19.2.8",
+    "react-device-detect": "^2.2.3",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
