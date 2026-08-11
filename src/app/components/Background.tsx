@@ -1,4 +1,4 @@
-import RainyWindowBackground from "../Raindrops"
+
 export default function Background() {
   return (
 
