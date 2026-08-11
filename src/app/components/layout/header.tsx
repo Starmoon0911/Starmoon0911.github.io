@@ -115,14 +115,20 @@ export default function Header() {
           </nav>
 
           <div
-            className={`grid transition-all duration-300 ease-out md:hidden ${
+            className={`grid overflow-hidden transition-[grid-template-rows,margin,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
               menuOpen
                 ? "mt-2 grid-rows-[1fr] opacity-100"
-                : "grid-rows-[0fr] opacity-0"
-            } `}
+                : "mt-0 grid-rows-[0fr] opacity-100"
+            }`}
           >
-            <div className="overflow-hidden">
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-2 shadow-lg backdrop-blur-xl">
+            <div className="min-h-0">
+              <div
+                className={`rounded-2xl border p-2 shadow-lg backdrop-blur-xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  menuOpen
+                    ? "border-white/10 bg-black/30 opacity-100"
+                    : "border-transparent bg-black/0 opacity-0"
+                }`}
+              >
                 {navItems.map((item, index) => (
                   <a
                     key={item.name}
@@ -134,7 +140,6 @@ export default function Header() {
                     }}
                   >
                     <span className="mr-3 text-zinc-600">├─</span>
-
                     {item.name}
                   </a>
                 ))}
