@@ -30,9 +30,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
 
         <Background />
-        <div className="h-48">
-          <div id="header-sentinel" className="h-px" />
-        </div>
         <Header />
         {children}
       </body>
