@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/header";
+import { ToastContainer, Bounce } from "react-toastify";
 import Background from "./components/Background";
 import SmoothScroll from "./components/SmoothScroll";
 import Footer from "./components/layout/footer";
@@ -32,6 +33,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <Background />
           <Header />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={true}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+          />
           {children}
           <Footer />
         </SmoothScroll>
