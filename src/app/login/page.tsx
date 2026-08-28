@@ -1,5 +1,5 @@
 "use client";
-import type { LoginResponse,LoginError } from "@/types/login";
+import type { LoginResponse, LoginError } from "@/types/login";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import api from "@/api/axios";
@@ -19,22 +19,51 @@ export default function LoginPage() {
 
   async function handleLogin(username: string, password: string) {
     try {
-      const response = await api.post<LoginResponse | LoginError>("/auth/login", {
+      toast.loading("Logging in...", { autoClose: 2000,toastId: "login-loading" });
+      
+      const response = await api.post<LoginResponse>("/auth/login", {
         username: username,
         password: password,
       });
-      if (response.status != 200 || !response.data.token) { 
-        toast.error(response.statusText);
+
+      if (response.status != 200 || !response.data.token) {
+        toast.update("login-loading", {
+          render: response.statusText,
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+          closeButton: true,
+        });
       }
+      toast.update("login-loading", {
+        render: "Login successful",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+        closeButton: true,
+      });
+
       await setCookie("token", response.data.token);
 
       router.push(redirect);
     } catch (error: any) {
-      if (axios.isAxiosError(error)) {
-        console.error("Status: ", error.response?.status);
-        console.error("message: ", error.response?.data);
+      if (axios.isAxiosError<LoginError>(error)) {
+        toast.update("login-loading", {
+          render: error.response?.data.message || "Login failed",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+          closeButton: true,
+        });
+
       } else {
-        console.error("Unexpected Error: ", error);
+        toast.update("login-loading", {
+          render: "An unexpected error occurred",
+          type: "error",
+          isLoading: false,
+          autoClose: 2000,
+          closeButton: true,
+        });
       }
     }
   }
