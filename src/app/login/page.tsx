@@ -1,6 +1,6 @@
 "use client";
 import type { LoginResponse, LoginError } from "@/types/login";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import api from "@/api/axios";
 import axios from "axios";
@@ -10,7 +10,14 @@ import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 import { setCookie } from "../actions";
 
-export default function LoginPage() {
+export default  function LoginPage() {
+  return (
+    <Suspense fallback={<div>loading..</div>}>
+      <LoginContent />
+    </Suspense>
+  )
+}
+function LoginContent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const searchParams = useSearchParams();
