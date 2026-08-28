@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { getCookie, logout } from "@/app/actions";
 import TerminalLogo from "./TerminalLogo";
+
 const navItems = [
   { name: "Home", href: "/" },
   { name: "Blog", href: "/blog" },
@@ -14,7 +16,20 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLogging, setIsLogging] = useState(false);
+
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await getCookie("token");
+
+      setIsLogging(token !== undefined);
+    };
+
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -22,6 +37,7 @@ export default function Header() {
 
     const updateHeader = () => {
       const currentScrollY = window.scrollY;
+
       if (currentScrollY <= 10) {
         setScrolled(false);
         setVisible(true);
@@ -63,6 +79,17 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleLogout = async () => {
+    setMenuOpen(false);
+
+    await logout();
+
+    setIsLogging(false);
+
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <header
@@ -106,6 +133,34 @@ export default function Header() {
                 </a>
               );
             })}
+
+            {/* Auth navigation */}
+            {isLogging && (
+              <>
+                <a
+                  href="/dashboard"
+                  className="group relative font-mono text-sm text-zinc-400 transition-colors hover:text-white"
+                >
+                  Dashboard
+
+                  <span
+                    className={`absolute -bottom-1 left-1/2 h-px -translate-x-1/2 bg-white transition-all duration-300 ease-out ${
+                      pathname === "/dashboard"
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="font-mono text-sm text-zinc-500 transition-colors hover:text-red-400"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -163,10 +218,32 @@ export default function Header() {
                   }}
                 >
                   <span className="mr-3 text-zinc-600">├─</span>
-
                   {item.name}
                 </a>
               ))}
+
+              {/* Logged in */}
+              {isLogging && (
+                <>
+                  <a
+                    href="/dashboard"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center rounded-xl px-4 py-3 font-mono text-sm text-zinc-400 transition-colors hover:bg-white/10 hover:text-white"
+                  >
+                    <span className="mr-3 text-zinc-600">├─</span>
+                    Dashboard
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center rounded-xl px-4 py-3 text-left font-mono text-sm text-zinc-400 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                  >
+                    <span className="mr-3 text-zinc-600">└─</span>
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
