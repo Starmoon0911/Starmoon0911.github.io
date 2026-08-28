@@ -87,9 +87,6 @@ export default function About() {
           <p className="max-w-2xl text-sm leading-7 text-zinc-200">
             我是陳威皓，一名對資訊科技抱有極大熱忱的學生。
             我喜歡研究各種技術，也喜歡把學到的東西實際做成專案，因此涉獵的領域比較廣。
-            <span className="ml-1 text-zinc-400">
-              <del>I use Arch btw.</del>
-            </span>
           </p>
 
           <p className="max-w-2xl text-sm leading-7 text-zinc-300">

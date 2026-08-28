@@ -13,3 +13,14 @@ export async function setCookie(k: string, v: string, option:Partial<ResponseCoo
     ...option
   });
 }
+export async function getCookie(k: string) {
+  const cookieStore = await cookies();
+  return cookieStore.get(k)?.value;
+}
+
+
+export async function logout() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("token");
+}
