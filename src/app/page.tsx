@@ -2,8 +2,41 @@
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import About from "./components/About";
-import { useState } from "react";
+import { useRef } from "react";
 export default function Home() {
+  const commentRef = useRef<HTMLDivElement>(null);
+
+  const handleCommentMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = commentRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = (y / rect.height - 0.5) * -20;
+    const rotateY = (x / rect.width - 0.5) * 20;
+
+    card.style.transform = `
+    perspective(800px)
+    rotateX(${rotateX}deg)
+    rotateY(${rotateY}deg)
+    scale(1.03)
+  `;
+  };
+
+  const handleCommentMouseLeave = () => {
+    const card = commentRef.current;
+    if (!card) return;
+
+    card.style.transform = `
+    perspective(800px)
+    rotateX(0deg)
+    rotateY(0deg)
+    scale(1)
+  `;
+  };
   return (
     <main>
       {/* Hero */}
@@ -14,18 +47,33 @@ export default function Home() {
           width={160}
           height={160}
           draggable={false}
-          className="rounded-full object-cover shadow-2xl select-none p-1"
+          className="rounded-full object-cover p-1 shadow-2xl select-none"
         />
+        <div
+          ref={commentRef}
+          onMouseMove={handleCommentMouseMove}
+          onMouseLeave={handleCommentMouseLeave}
+          className="relative mt-5 max-w-xs overflow-hidden rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left shadow-lg backdrop-blur-sm transition-transform duration-150 ease-out"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
 
+          <div className="relative">
+            <div className="mb-1 flex items-center gap-2 font-mono text-xs text-zinc-300">
+              <span>&gt; Comment</span>
+            </div>
+
+            <p className="font-mono text-sm text-zinc-400">
+              Wanna become a researcher...
+            </p>
+          </div>
+        </div>{" "}
         <h1 className="mt-6 font-mono text-2xl font-bold text-white">
           wei0911
         </h1>
-
         <div className="mt-3 flex items-center gap-2 font-mono text-sm text-zinc-400">
           <MapPin size={16} />
           <span>Taiwan / Taichung</span>
         </div>
-
         <a
           href="https://github.com/Starmoon0911"
           target="_blank"
@@ -42,7 +90,6 @@ export default function Home() {
 
           <span>github.com/Starmoon0911</span>
         </a>
-
         {/* Scroll Arrow */}
         <a
           href="#about"
