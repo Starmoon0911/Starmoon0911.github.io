@@ -7,10 +7,7 @@ export default function Footer() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
 
           <div className="font-mono text-xs text-zinc-500">
-            <span className="text-zinc-600">~/</span>
-            <span className="text-zinc-300">wei0911@blog</span>
-            <span className="text-zinc-700">:</span>
-            <span>~$</span>
+ 
           </div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs text-zinc-500">
@@ -54,11 +51,6 @@ export default function Footer() {
               </svg>
               Instagram
             </a>
-
-            <span className="flex items-center gap-2">
-              <MapPin size={14} />
-              Taiwan / Taichung
-            </span>
 
             <span className="text-zinc-600">© 2026 wei0911</span>
           </div>
