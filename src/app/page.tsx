@@ -47,7 +47,7 @@ export default function Home() {
           width={160}
           height={160}
           draggable={false}
-          className="rounded-full object-cover p-1 shadow-2xl select-none"
+          className="rounded-full object-cover p-1 ring-1 ring-white/10 select-none"
         />
         <div
           ref={commentRef}
@@ -67,7 +67,7 @@ export default function Home() {
             </p>
           </div>
         </div>{" "}
-        <h1 className="mt-6 font-mono text-2xl font-bold text-white">
+        <h1 className="mt-6 text-3xl font-semibold tracking-tight text-white">
           wei0911
         </h1>
         <div className="mt-3 flex items-center gap-2 font-mono text-sm text-zinc-400">
