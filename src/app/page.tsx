@@ -39,34 +39,22 @@ export default function Home() {
   };
   return (
     <main>
+      
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
-        <Image
-          src="/avatar.jpg"
-          alt="Avatar"
-          width={160}
-          height={160}
-          draggable={false}
-          className="rounded-full object-cover p-1 ring-1 ring-white/10 select-none"
-        />
-        <div
-          ref={commentRef}
-          onMouseMove={handleCommentMouseMove}
-          onMouseLeave={handleCommentMouseLeave}
-          className="relative mt-5 max-w-xs overflow-hidden rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left shadow-lg backdrop-blur-sm transition-transform duration-150 ease-out"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
+        {/* Avatar + Thought Bubble (IG Notes style) */}
+        <div className="relative mt-5" style={{ width: 160, height: 160 }}>
+          {/* Avatar */}
+          <Image
+            src="/avatar.jpg"
+            alt="Avatar"
+            width={160}
+            height={160}
+            draggable={false}
+            className="rounded-full object-cover p-1 ring-1 ring-white/10 select-none"
+          />
 
-          <div className="relative">
-            <div className="mb-1 flex items-center gap-2 font-mono text-xs text-zinc-300">
-              <span>&gt; Comment</span>
-            </div>
-
-            <p className="font-mono text-sm text-zinc-400">
-              Wanna become a researcher...
-            </p>
-          </div>
-        </div>{" "}
+         </div>
         <h1 className="mt-6 text-3xl font-semibold tracking-tight text-white">
           wei0911
         </h1>
