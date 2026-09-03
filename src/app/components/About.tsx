@@ -291,6 +291,7 @@ function StoryLayer({
 }) {
   const { entryStart, entryEnd, exitStart, exitEnd } = transitionRange(index);
   const isLast = index === sectionTitles.length - 1;
+
   const opacity = useTransform(
     progress,
     isLast
@@ -298,6 +299,7 @@ function StoryLayer({
       : [entryStart, entryEnd, exitStart, exitEnd],
     isLast ? [0, 1, 1] : [0, 1, 1, 0],
   );
+
   const y = useTransform(
     progress,
     isLast
@@ -305,8 +307,21 @@ function StoryLayer({
       : [entryStart, entryEnd, exitStart, exitEnd],
     isLast ? [24, 0, 0] : [24, 0, 0, -24],
   );
+
+  const pointerEvents = useTransform(
+    opacity,
+    (value) => (value > 0.5 ? "auto" : "none"),
+  );
+
   return (
-    <motion.div className="absolute inset-x-0 top-0" style={{ opacity, y }}>
+    <motion.div
+      className="absolute inset-x-0 top-0"
+      style={{
+        opacity,
+        y,
+        pointerEvents,
+      }}
+    >
       {children}
     </motion.div>
   );
